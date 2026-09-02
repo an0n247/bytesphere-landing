@@ -11,13 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import {
-  PreviewProvider,
-  PreviewDeviceFrame,
-  PreviewOverlays,
-  PreviewBar,
-  SidePreview,
-} from "../components/preview";
+import { ThemeProvider } from "../components/ThemeProvider";
 
 function NotFoundComponent() {
   return (
@@ -88,7 +82,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "Web app design and e-commerce studio for teams that ship." },
       { name: "author", content: "Bytsphere Technology" },
       { property: "og:title", content: "Bytsphere Technology" },
-      { property: "og:description", content: "Web app design and e-commerce studio for teams that ship." },
+      {
+        property: "og:description",
+        content: "Web app design and e-commerce studio for teams that ship.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@bytsphere" },
@@ -132,15 +129,10 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <PreviewProvider>
-        <PreviewOverlays />
-        <PreviewDeviceFrame>
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-          <Outlet />
-        </PreviewDeviceFrame>
-        <SidePreview />
-        <PreviewBar />
-      </PreviewProvider>
+      <ThemeProvider>
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

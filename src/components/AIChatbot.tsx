@@ -18,7 +18,6 @@ import {
   HelpCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { usePreview } from "@/components/preview";
 
 interface Message {
   id: string;
@@ -30,9 +29,15 @@ interface Message {
 
 const QUICK_PROMPTS = [
   { label: "What services do you offer?", query: "What services does Bytsphere offer?" },
-  { label: "Tell me about your portfolio", query: "Can you tell me about your recent projects and case studies?" },
+  {
+    label: "Tell me about your portfolio",
+    query: "Can you tell me about your recent projects and case studies?",
+  },
   { label: "How does your 4-step process work?", query: "How does your development process work?" },
-  { label: "What are your timelines & pricing?", query: "What are your typical project timelines and pricing structure?" },
+  {
+    label: "What are your timelines & pricing?",
+    query: "What are your typical project timelines and pricing structure?",
+  },
   { label: "How do I start a project?", query: "How can I book a call or start a project?" },
 ];
 
@@ -42,7 +47,12 @@ function generateResponse(query: string): {
 } {
   const q = query.toLowerCase();
 
-  if (q.includes("service") || q.includes("build") || q.includes("offer") || q.includes("what do you do")) {
+  if (
+    q.includes("service") ||
+    q.includes("build") ||
+    q.includes("offer") ||
+    q.includes("what do you do")
+  ) {
     return {
       text: "At Bytsphere Technology, we focus on 4 core disciplines with zero vendor hand-offs:\n\n1. **Web App Design**: Fast, responsive SaaS dashboards and customer portals.\n2. **E-Commerce Development**: High-converting headless storefronts (Shopify Plus, Edge CDN) with sub-second page loads.\n3. **UI / UX Design**: Research-led design systems, accessible components, and calm user interfaces.\n4. **Product Strategy**: Revenue-aligned roadmaps, KPIs, and Lighthouse 95+ performance optimization.",
       actions: [
@@ -52,7 +62,13 @@ function generateResponse(query: string): {
     };
   }
 
-  if (q.includes("portfolio") || q.includes("work") || q.includes("project") || q.includes("case study") || q.includes("client")) {
+  if (
+    q.includes("portfolio") ||
+    q.includes("work") ||
+    q.includes("project") ||
+    q.includes("case study") ||
+    q.includes("client")
+  ) {
     return {
       text: "Here are some of our notable client success stories:\n\n• **Fieldnote Commerce**: Headless Shopify Plus rebuild with 0.8s load time & **+38% mobile conversions**.\n• **Lumenloop Analytics**: Real-time SaaS telemetry dashboard with sub-100ms interactions & **4.9/5 user rating**.\n• **Nordic Atelier**: Luxury DTC storefront with custom 3D visualizer & **+52% average order value**.\n\nWe've shipped 120+ digital products over 9 years with an average +34% conversion lift.",
       actions: [
@@ -62,14 +78,29 @@ function generateResponse(query: string): {
     };
   }
 
-  if (q.includes("process") || q.includes("how we work") || q.includes("step") || q.includes("sprint") || q.includes("methodology")) {
+  if (
+    q.includes("process") ||
+    q.includes("how we work") ||
+    q.includes("step") ||
+    q.includes("sprint") ||
+    q.includes("methodology")
+  ) {
     return {
       text: "We run a fast, predictable 4-step sprint with weekly staging previews:\n\n1. **Discovery & Architecture**: Mapping user journeys, technical specifications, and system blueprints.\n2. **Interface Prototyping**: Interactive Figma prototypes tested for conversion & accessibility.\n3. **High-Speed Engineering**: Pixel-perfect frontend with React, TanStack, and resilient APIs.\n4. **Launch & Scaling**: End-to-end QA, Lighthouse optimization, and analytics tracking.",
       actions: [{ label: "Learn About Our Process", href: "#process" }],
     };
   }
 
-  if (q.includes("time") || q.includes("timeline") || q.includes("cost") || q.includes("price") || q.includes("pricing") || q.includes("quote") || q.includes("rate") || q.includes("how much")) {
+  if (
+    q.includes("time") ||
+    q.includes("timeline") ||
+    q.includes("cost") ||
+    q.includes("price") ||
+    q.includes("pricing") ||
+    q.includes("quote") ||
+    q.includes("rate") ||
+    q.includes("how much")
+  ) {
     return {
       text: "Our typical project engagements:\n\n⏱️ **Timeline**: Focused sprints typically take **4 to 8 weeks** from kickoff to production deployment.\n\n💼 **Pricing**: Every build is custom-tailored based on scope, integrations, and architectural requirements. We offer fixed-price sprint packages and dedicated product engineering retainers.\n\nLet's discuss your roadmap on a short 20-minute discovery call!",
       actions: [
@@ -79,7 +110,14 @@ function generateResponse(query: string): {
     };
   }
 
-  if (q.includes("contact") || q.includes("start") || q.includes("call") || q.includes("book") || q.includes("hire") || q.includes("email")) {
+  if (
+    q.includes("contact") ||
+    q.includes("start") ||
+    q.includes("call") ||
+    q.includes("book") ||
+    q.includes("hire") ||
+    q.includes("email")
+  ) {
     return {
       text: "We are currently accepting new client projects for **Q3 & Q4**!\n\nYou can reach out directly:\n📧 **Email**: [hello@bytsphere.dev](mailto:hello@bytsphere.dev)\n📞 **Discovery**: Fill out our project form below or schedule an introductory call.",
       actions: [
@@ -89,7 +127,13 @@ function generateResponse(query: string): {
     };
   }
 
-  if (q.includes("stack") || q.includes("tech") || q.includes("technology") || q.includes("react") || q.includes("tanstack")) {
+  if (
+    q.includes("stack") ||
+    q.includes("tech") ||
+    q.includes("technology") ||
+    q.includes("react") ||
+    q.includes("tanstack")
+  ) {
     return {
       text: "Our core technology stack is engineered for peak speed, reliability, and maintainability:\n\n• **Frontend**: React 19, TypeScript, TanStack Router & Start, Tailwind CSS\n• **Backend & APIs**: Nitro, Cloudflare Workers, Node.js, GraphQL / REST\n• **Commerce**: Shopify Plus, Stripe, Headless CMS (Sanity / Contentful)\n• **Performance**: Lighthouse 95+ guarantees, Edge caching, Core Web Vitals optimization.",
       actions: [{ label: "Start a Project", href: "#contact" }],
@@ -117,7 +161,6 @@ function generateResponse(query: string): {
 }
 
 export function AIChatbot() {
-  const { isIframe } = usePreview();
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [hasUnread, setHasUnread] = useState(false);
@@ -289,9 +332,7 @@ export function AIChatbot() {
         <div
           className={cn(
             "flex flex-col overflow-hidden rounded-3xl border border-border bg-background shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3)] backdrop-blur-2xl transition-all duration-300",
-            isMinimized
-              ? "h-16 w-80 sm:w-96"
-              : "h-[560px] max-h-[82vh] w-[92vw] sm:w-[410px]"
+            isMinimized ? "h-16 w-80 sm:w-96" : "h-[560px] max-h-[82vh] w-[92vw] sm:w-[410px]",
           )}
           role="dialog"
           aria-label="Bytsphere AI Chat Assistant"
@@ -362,7 +403,7 @@ export function AIChatbot() {
                       key={msg.id}
                       className={cn(
                         "flex flex-col gap-1.5 animate-in fade-in slide-in-from-bottom-2 duration-200",
-                        isUser ? "items-end" : "items-start"
+                        isUser ? "items-end" : "items-start",
                       )}
                     >
                       <div className="flex items-end gap-2 max-w-[86%]">
@@ -376,7 +417,7 @@ export function AIChatbot() {
                             "relative rounded-2xl px-3.5 py-2.5 leading-relaxed shadow-xs",
                             isUser
                               ? "bg-primary text-primary-foreground rounded-br-xs font-medium"
-                              : "border border-border bg-muted/50 text-foreground rounded-bl-xs"
+                              : "border border-border bg-muted/50 text-foreground rounded-bl-xs",
                           )}
                         >
                           <div className="whitespace-pre-wrap">{msg.text}</div>
@@ -409,7 +450,7 @@ export function AIChatbot() {
                       <div
                         className={cn(
                           "flex items-center gap-1.5 px-1 text-[10px] text-muted-foreground/70",
-                          isUser ? "mr-1 flex-row-reverse" : "ml-8"
+                          isUser ? "mr-1 flex-row-reverse" : "ml-8",
                         )}
                       >
                         <span>{msg.timestamp}</span>
