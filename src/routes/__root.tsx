@@ -11,6 +11,12 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import {
+  PreviewProvider,
+  PreviewDeviceFrame,
+  PreviewOverlays,
+  PreviewBar,
+} from "../components/preview";
 
 function NotFoundComponent() {
   return (
@@ -125,8 +131,14 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <PreviewProvider>
+        <PreviewOverlays />
+        <PreviewDeviceFrame>
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+        </PreviewDeviceFrame>
+        <PreviewBar />
+      </PreviewProvider>
     </QueryClientProvider>
   );
 }
