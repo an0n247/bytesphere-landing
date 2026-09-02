@@ -25,11 +25,9 @@ import {
   ShoppingBag,
   Layers,
   BarChart3,
-  PanelRight,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { AIChatbot } from "@/components/AIChatbot";
-import { usePreview } from "@/components/preview";
 import {
   Accordion,
   AccordionContent,
@@ -131,7 +129,6 @@ function ContactPage() {
 
 function ContactHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { sidePreviewOpen, toggleSidePreview } = usePreview();
 
   const navLinks = [
     { name: "Services", href: "/#services" },
@@ -177,22 +174,7 @@ function ContactHeader() {
           </nav>
 
           {/* Desktop Actions */}
-          <div className="hidden items-center gap-2 md:flex">
-            <button
-              type="button"
-              onClick={toggleSidePreview}
-              className={cn(
-                "inline-flex items-center gap-1.5 rounded-xl border px-2.5 py-1.5 font-body text-[13px] font-medium transition-all",
-                sidePreviewOpen
-                  ? "border-primary/50 bg-primary/15 text-primary shadow-xs"
-                  : "border-border bg-background/80 text-muted-foreground hover:bg-muted hover:text-foreground hover:border-primary/30"
-              )}
-              title="Toggle In-App Side Preview (Alt+S)"
-              aria-label="Toggle In-App Side Preview"
-            >
-              <PanelRight className="size-3.5 text-primary" />
-              <span className="hidden xl:inline">Side Preview</span>
-            </button>
+          <div className="hidden items-center gap-2.5 md:flex">
             <ThemeToggle />
             <a
               href="mailto:hello@bytsphere.dev"
@@ -205,20 +187,6 @@ function ContactHeader() {
 
           {/* Mobile Actions */}
           <div className="flex items-center gap-1.5 md:hidden">
-            <button
-              type="button"
-              onClick={toggleSidePreview}
-              className={cn(
-                "grid size-9 place-items-center rounded-xl border transition-all",
-                sidePreviewOpen
-                  ? "border-primary/50 bg-primary/15 text-primary"
-                  : "border-border bg-background/80 text-muted-foreground hover:bg-muted hover:text-foreground"
-              )}
-              title="Toggle Side Preview"
-              aria-label="Toggle Side Preview"
-            >
-              <PanelRight className="size-4 text-primary" />
-            </button>
             <ThemeToggle />
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -247,24 +215,6 @@ function ContactHeader() {
               </a>
             ))}
             <div className="mt-4 flex flex-col gap-2.5 pt-3 border-t border-border">
-              <button
-                type="button"
-                onClick={() => {
-                  toggleSidePreview();
-                  setMobileMenuOpen(false);
-                }}
-                className="flex w-full items-center justify-between rounded-xl border border-border bg-muted/40 px-3.5 py-2.5 text-sm font-medium transition-colors hover:bg-muted"
-              >
-                <div className="flex items-center gap-2.5">
-                  <div className="grid size-7 place-items-center rounded-lg bg-background shadow-xs ring-1 ring-border">
-                    <PanelRight className="size-3.5 text-primary" />
-                  </div>
-                  <span className="text-foreground font-body text-[13px]">In-App Side Preview</span>
-                </div>
-                <span className={cn("rounded-md px-2 py-0.5 text-xs font-semibold", sidePreviewOpen ? "bg-primary text-primary-foreground" : "bg-background text-muted-foreground shadow-xs")}>
-                  {sidePreviewOpen ? "Active" : "Open (Alt+S)"}
-                </span>
-              </button>
               <ThemeToggle variant="switch" />
               <a
                 href="mailto:hello@bytsphere.dev"
