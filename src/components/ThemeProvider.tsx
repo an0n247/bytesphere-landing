@@ -52,6 +52,26 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }
   }, [themeMode]);
 
+  // Proactively remove Lovable badge if injected dynamically
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+
+    const removeBadge = () => {
+      const badges = document.querySelectorAll(
+        "#lovable-badge, [id*='lovable-badge'], [class*='lovable-badge'], [data-lovable-badge], a[href*='lovable.dev']",
+      );
+      badges.forEach((el) => el.remove());
+    };
+
+    removeBadge();
+    const observer = new MutationObserver(() => {
+      removeBadge();
+    });
+
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <ThemeContext.Provider value={{ themeMode, setThemeMode }}>{children}</ThemeContext.Provider>
   );
