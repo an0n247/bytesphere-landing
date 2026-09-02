@@ -21,6 +21,7 @@ import heroAsset from "@/assets/bytsphere-hero.jpg.asset.json";
 import testimonial1Asset from "@/assets/bytsphere-testimonial-1.jpg.asset.json";
 import testimonial2Asset from "@/assets/bytsphere-testimonial-2.jpg.asset.json";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { AIChatbot } from "@/components/AIChatbot";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -63,6 +64,7 @@ function LandingPage() {
         <FinalCTA />
       </main>
       <Footer />
+      <AIChatbot />
     </div>
   );
 }

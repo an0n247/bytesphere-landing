@@ -100,7 +100,7 @@ export function PreviewBar() {
   // Minimized floating trigger pill
   if (!isExpanded) {
     return (
-      <div className="fixed bottom-5 right-5 z-[9999] animate-in fade-in slide-in-from-bottom-3 duration-200">
+      <div className="fixed bottom-5 left-5 z-[9999] animate-in fade-in slide-in-from-bottom-3 duration-200">
         <button
           onClick={() => setIsExpanded(true)}
           className="group flex items-center gap-2.5 rounded-full border border-slate-800 bg-slate-950/90 px-4 py-2.5 text-xs font-semibold text-slate-200 shadow-2xl backdrop-blur-xl transition-all hover:scale-105 hover:border-primary/60 hover:bg-slate-900 active:scale-95"
