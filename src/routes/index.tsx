@@ -117,7 +117,7 @@ function Hero() {
               className="aspect-[5/4] w-full rounded-3xl bg-muted object-cover"
               width={1280}
               height={1024}
-              priority="true"
+              loading="eager"
             />
             <div className="rise-d4 absolute -bottom-5 -left-4 flex items-center gap-3 rounded-2xl bg-background px-4 py-3 shadow-sm ring-1 ring-border">
               <span className="grid size-8 place-items-center rounded-md bg-primary/10">
