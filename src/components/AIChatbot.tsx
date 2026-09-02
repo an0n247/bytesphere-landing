@@ -233,6 +233,8 @@ export function AIChatbot() {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
+  if (isIframe) return null;
+
   return (
     <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end">
       {/* Floating Welcome Notification Pill */}
