@@ -25,7 +25,7 @@ interface Message {
   sender: "user" | "bot";
   text: string;
   timestamp: string;
-  actions?: { label: string; href?: string; action?: string }[];
+  actions?: { label: string; href?: string; action?: string }[] | undefined;
 }
 
 const QUICK_PROMPTS = [
@@ -125,8 +125,6 @@ export function AIChatbot() {
   const [inputMessage, setInputMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
-
-  if (isIframe) return null;
 
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -234,6 +232,8 @@ export function AIChatbot() {
     setCopiedId(id);
     setTimeout(() => setCopiedId(null), 2000);
   };
+
+  if (isIframe) return null;
 
   return (
     <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end">
