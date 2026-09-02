@@ -27,7 +27,9 @@ import {
   SlidersHorizontal,
   X,
   Layers,
+  PanelRight,
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export function PreviewBar() {
   const {
@@ -52,7 +54,12 @@ export function PreviewBar() {
     currentDimensions,
     scrollToSection,
     resetPreview,
+    sidePreviewOpen,
+    toggleSidePreview,
+    isIframe,
   } = usePreview();
+
+  if (isIframe) return null;
 
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [showSectionPicker, setShowSectionPicker] = useState(false);
@@ -311,6 +318,21 @@ export function PreviewBar() {
             </div>
           )}
         </div>
+
+        {/* Side Preview Split View Toggle */}
+        <button
+          onClick={toggleSidePreview}
+          className={cn(
+            "flex items-center gap-1.5 rounded-xl border px-2.5 py-1.5 text-xs font-medium transition-all",
+            sidePreviewOpen
+              ? "border-primary/60 bg-primary/20 text-primary shadow-xs"
+              : "border-slate-800 bg-slate-900/80 text-slate-300 hover:bg-slate-800 hover:text-white"
+          )}
+          title="Toggle In-App Side Preview (Alt+S)"
+        >
+          <PanelRight className="size-3.5" />
+          <span className="hidden sm:inline">Side Preview</span>
+        </button>
 
         {/* Inspection Tools: 12-Col Grid & Wireframe Outlines */}
         <div className="hidden sm:flex items-center gap-1 rounded-xl bg-slate-900/80 p-1 ring-1 ring-slate-800">

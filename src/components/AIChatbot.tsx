@@ -18,6 +18,7 @@ import {
   HelpCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { usePreview } from "@/components/preview";
 
 interface Message {
   id: string;
@@ -116,6 +117,7 @@ function generateResponse(query: string): {
 }
 
 export function AIChatbot() {
+  const { isIframe } = usePreview();
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [hasUnread, setHasUnread] = useState(false);
@@ -123,6 +125,8 @@ export function AIChatbot() {
   const [inputMessage, setInputMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  if (isIframe) return null;
 
   const [messages, setMessages] = useState<Message[]>([
     {

@@ -142,6 +142,16 @@ interface PreviewContextType {
   activeSection: string;
   scrollToSection: (id: string) => void;
   resetPreview: () => void;
+  sidePreviewOpen: boolean;
+  setSidePreviewOpen: (open: boolean | ((prev: boolean) => boolean)) => void;
+  toggleSidePreview: () => void;
+  sidePreviewDevice: DevicePreset;
+  setSidePreviewDevice: (device: DevicePreset) => void;
+  sidePreviewPosition: "right" | "left" | "floating";
+  setSidePreviewPosition: (pos: "right" | "left" | "floating") => void;
+  sidePreviewWidth: number;
+  setSidePreviewWidth: (w: number) => void;
+  isIframe: boolean;
 }
 
 const PreviewContext = createContext<PreviewContextType | null>(null);
@@ -161,6 +171,18 @@ export function PreviewProvider({ children }: { children: React.ReactNode }) {
   const [fontScale, setFontScale] = useState<number>(100);
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
   const [activeSection, setActiveSection] = useState<string>("hero");
+  const [sidePreviewOpen, setSidePreviewOpen] = useState<boolean>(false);
+  const [sidePreviewDevice, setSidePreviewDevice] = useState<DevicePreset>("iphone16");
+  const [sidePreviewPosition, setSidePreviewPosition] = useState<"right" | "left" | "floating">("right");
+  const [sidePreviewWidth, setSidePreviewWidth] = useState<number>(440);
+  const [isIframe, setIsIframe] = useState<boolean>(false);
+
+  // Detect if inside an iframe
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsIframe(window.self !== window.top);
+    }
+  }, []);
 
   // Load from local storage on client mount
   useEffect(() => {
@@ -173,6 +195,15 @@ export function PreviewProvider({ children }: { children: React.ReactNode }) {
 
       const savedExpanded = localStorage.getItem(`${STORAGE_KEY_PREFIX}expanded`);
       if (savedExpanded !== null) setIsExpanded(savedExpanded === "true");
+
+      const savedSideOpen = localStorage.getItem(`${STORAGE_KEY_PREFIX}side_open`);
+      if (savedSideOpen !== null) setSidePreviewOpen(savedSideOpen === "true");
+
+      const savedSidePos = localStorage.getItem(`${STORAGE_KEY_PREFIX}side_pos`) as "right" | "left" | "floating";
+      if (savedSidePos) setSidePreviewPosition(savedSidePos);
+
+      const savedSideDev = localStorage.getItem(`${STORAGE_KEY_PREFIX}side_dev`) as DevicePreset;
+      if (savedSideDev) setSidePreviewDevice(savedSideDev);
     } catch {
       // Storage unavailable or disabled
     }
@@ -243,7 +274,18 @@ export function PreviewProvider({ children }: { children: React.ReactNode }) {
     }
   }, [isExpanded]);
 
-  // Global Keyboard shortcuts: Alt+P or Ctrl+Shift+P to toggle bar
+  // Sync sidePreview persistence
+  useEffect(() => {
+    try {
+      localStorage.setItem(`${STORAGE_KEY_PREFIX}side_open`, String(sidePreviewOpen));
+      localStorage.setItem(`${STORAGE_KEY_PREFIX}side_pos`, sidePreviewPosition);
+      localStorage.setItem(`${STORAGE_KEY_PREFIX}side_dev`, sidePreviewDevice);
+    } catch {
+      // ignore
+    }
+  }, [sidePreviewOpen, sidePreviewPosition, sidePreviewDevice]);
+
+  // Global Keyboard shortcuts: Alt+P (PreviewBar), Alt+S (Side Preview)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (
@@ -252,6 +294,13 @@ export function PreviewProvider({ children }: { children: React.ReactNode }) {
       ) {
         e.preventDefault();
         setIsExpanded((prev) => !prev);
+      }
+      if (
+        (e.altKey && (e.key === "s" || e.key === "S")) ||
+        (e.ctrlKey && e.shiftKey && (e.key === "s" || e.key === "S"))
+      ) {
+        e.preventDefault();
+        setSidePreviewOpen((prev) => !prev);
       }
     };
 
@@ -286,6 +335,10 @@ export function PreviewProvider({ children }: { children: React.ReactNode }) {
     setOrientation((prev) => (prev === "portrait" ? "landscape" : "portrait"));
   };
 
+  const toggleSidePreview = () => {
+    setSidePreviewOpen((prev) => !prev);
+  };
+
   const scrollToSection = (id: string) => {
     setActiveSection(id);
     if (id === "hero") {
@@ -312,6 +365,7 @@ export function PreviewProvider({ children }: { children: React.ReactNode }) {
     setShowOutlines(false);
     setThemeMode("light");
     setAccentColor("blue");
+    setSidePreviewOpen(false);
   };
 
   return (
@@ -344,6 +398,16 @@ export function PreviewProvider({ children }: { children: React.ReactNode }) {
         activeSection,
         scrollToSection,
         resetPreview,
+        sidePreviewOpen,
+        setSidePreviewOpen,
+        toggleSidePreview,
+        sidePreviewDevice,
+        setSidePreviewDevice,
+        sidePreviewPosition,
+        setSidePreviewPosition,
+        sidePreviewWidth,
+        setSidePreviewWidth,
+        isIframe,
       }}
     >
       {children}

@@ -16,6 +16,7 @@ import {
   PreviewDeviceFrame,
   PreviewOverlays,
   PreviewBar,
+  SidePreview,
 } from "../components/preview";
 
 function NotFoundComponent() {
@@ -137,6 +138,7 @@ function RootComponent() {
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />
         </PreviewDeviceFrame>
+        <SidePreview />
         <PreviewBar />
       </PreviewProvider>
     </QueryClientProvider>
