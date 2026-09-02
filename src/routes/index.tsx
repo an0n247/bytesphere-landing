@@ -20,6 +20,7 @@ import {
 import heroAsset from "@/assets/bytsphere-hero.jpg.asset.json";
 import testimonial1Asset from "@/assets/bytsphere-testimonial-1.jpg.asset.json";
 import testimonial2Asset from "@/assets/bytsphere-testimonial-2.jpg.asset.json";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -108,10 +109,11 @@ function Header() {
           </nav>
 
           {/* Desktop Actions */}
-          <div className="hidden items-center gap-3 md:flex">
+          <div className="hidden items-center gap-2.5 md:flex">
+            <ThemeToggle />
             <a
               href="#contact"
-              className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[13px] font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              className="inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-[13px] font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             >
               <PhoneCall className="size-3.5 text-primary" />
               <span>Contact Us</span>
@@ -125,8 +127,9 @@ function Header() {
             </a>
           </div>
 
-          {/* Mobile Menu Toggle Button */}
+          {/* Mobile Actions */}
           <div className="flex items-center gap-2 md:hidden">
+            <ThemeToggle />
             <a
               href="#contact"
               className="rounded-lg bg-primary px-3 py-1.5 text-[12px] font-semibold text-primary-foreground"
@@ -159,7 +162,8 @@ function Header() {
                 <ArrowUpRight className="size-4 text-muted-foreground" />
               </a>
             ))}
-            <div className="mt-4 flex flex-col gap-2 pt-3 border-t border-border">
+            <div className="mt-4 flex flex-col gap-2.5 pt-3 border-t border-border">
+              <ThemeToggle variant="switch" />
               <a
                 href="#contact"
                 onClick={() => setMobileMenuOpen(false)}
