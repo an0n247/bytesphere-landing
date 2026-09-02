@@ -76,12 +76,12 @@ function Header() {
   const { sidePreviewOpen, toggleSidePreview } = usePreview();
 
   const navLinks = [
-    { name: "Services", href: "#services" },
-    { name: "Portfolio", href: "#portfolio" },
-    { name: "Process", href: "#process" },
-    { name: "Proof", href: "#proof" },
-    { name: "Testimonials", href: "#testimonials" },
-    { name: "Contact", href: "#contact" },
+    { name: "Services", href: "/#services" },
+    { name: "Portfolio", href: "/#portfolio" },
+    { name: "Process", href: "/#process" },
+    { name: "Proof", href: "/#proof" },
+    { name: "Testimonials", href: "/#testimonials" },
+    { name: "Contact", href: "/contact" },
   ];
 
   return (
@@ -131,14 +131,14 @@ function Header() {
             </button>
             <ThemeToggle />
             <a
-              href="#contact"
+              href="/contact"
               className="inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-[13px] font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             >
               <PhoneCall className="size-3.5 text-primary" />
               <span>Contact Us</span>
             </a>
             <a
-              href="#contact"
+              href="/contact"
               className="group inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 font-body text-[13px] font-semibold text-primary-foreground shadow-sm ring-1 ring-primary transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:brightness-105 active:translate-y-0"
             >
               <span>Start a project</span>
@@ -163,7 +163,7 @@ function Header() {
             </button>
             <ThemeToggle />
             <a
-              href="#contact"
+              href="/contact"
               className="rounded-lg bg-primary px-3 py-1.5 text-[12px] font-semibold text-primary-foreground"
             >
               Start
@@ -215,7 +215,7 @@ function Header() {
               </button>
               <ThemeToggle variant="switch" />
               <a
-                href="#contact"
+                href="/contact"
                 onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-[13px] font-semibold text-primary-foreground shadow-sm"
               >
@@ -257,7 +257,7 @@ function Hero() {
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
-                href="#contact"
+                href="/contact"
                 className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 font-body text-[14px] font-semibold text-primary-foreground shadow-sm ring-1 ring-primary transition-all hover:-translate-y-0.5 hover:shadow-md hover:brightness-105"
               >
                 <span>Book a discovery call</span>
@@ -630,7 +630,7 @@ function FinalCTA() {
             </div>
             <div className="flex flex-col gap-3 sm:flex-row lg:flex-col shrink-0">
               <a
-                href="mailto:hello@bytsphere.dev"
+                href="/contact"
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-background px-6 py-3 font-body text-[14px] font-semibold text-primary shadow-sm ring-1 ring-background transition-all hover:-translate-y-0.5 hover:shadow-md hover:bg-background/95"
               >
                 <span>Start a project</span>
@@ -663,16 +663,16 @@ function Footer() {
             <a href="mailto:hello@bytsphere.dev" className="transition-colors hover:text-foreground">
               hello@bytsphere.dev
             </a>
-            <a href="#services" className="transition-colors hover:text-foreground">
+            <a href="/#services" className="transition-colors hover:text-foreground">
               Services
             </a>
-            <a href="#portfolio" className="transition-colors hover:text-foreground">
+            <a href="/#portfolio" className="transition-colors hover:text-foreground">
               Portfolio
             </a>
-            <a href="#process" className="transition-colors hover:text-foreground">
+            <a href="/#process" className="transition-colors hover:text-foreground">
               Process
             </a>
-            <a href="#contact" className="transition-colors hover:text-foreground">
+            <a href="/contact" className="transition-colors hover:text-foreground">
               Contact
             </a>
           </div>
