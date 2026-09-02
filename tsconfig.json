@@ -22,6 +22,7 @@
     "noPropertyAccessFromIndexSignature": true,
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
+    "resolveJsonModule": true,
     "noUncheckedSideEffectImports": true,
     "paths": {
       "@/*": ["./src/*"]
