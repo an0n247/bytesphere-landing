@@ -25,7 +25,7 @@ interface Message {
   sender: "user" | "bot";
   text: string;
   timestamp: string;
-  actions?: { label: string; href?: string; action?: string }[];
+  actions?: { label: string; href?: string; action?: string }[] | undefined;
 }
 
 const QUICK_PROMPTS = [
