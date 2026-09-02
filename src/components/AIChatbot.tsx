@@ -161,6 +161,7 @@ function generateResponse(query: string): {
 }
 
 export function AIChatbot() {
+  const [isIframe, setIsIframe] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [hasUnread, setHasUnread] = useState(false);
@@ -185,6 +186,11 @@ export function AIChatbot() {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Detect embedded previews after hydration so SSR and the first client render match.
+  useEffect(() => {
+    setIsIframe(window.self !== window.top);
+  }, []);
 
   // Auto-scroll to bottom of messages
   const scrollToBottom = () => {
