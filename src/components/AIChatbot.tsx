@@ -126,8 +126,6 @@ export function AIChatbot() {
   const [isTyping, setIsTyping] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  if (isIframe) return null;
-
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "msg-welcome",
