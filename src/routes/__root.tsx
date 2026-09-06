@@ -115,6 +115,14 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        <style type="text/css">{`
+          header, [role="banner"], nav.sticky {
+            box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.12), 0 4px 10px -2px rgba(0, 0, 0, 0.08) !important;
+          }
+          .dark header, .dark [role="banner"], .dark nav.sticky {
+            box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.5), 0 4px 10px -2px rgba(0, 0, 0, 0.3) !important;
+          }
+        `}</style>
       </head>
       <body>
         {children}
