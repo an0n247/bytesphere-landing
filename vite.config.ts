@@ -12,4 +12,28 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  vite: {
+    build: {
+      target: "es2022",
+      cssCodeSplit: true,
+      chunkSizeWarningLimit: 1000,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes("node_modules")) {
+              if (id.includes("lucide-react")) {
+                return "vendor-icons";
+              }
+              if (id.includes("@radix-ui")) {
+                return "vendor-ui";
+              }
+            }
+          },
+        },
+      },
+    },
+    optimizeDeps: {
+      include: ["react", "react-dom", "lucide-react"],
+    },
+  },
 });
