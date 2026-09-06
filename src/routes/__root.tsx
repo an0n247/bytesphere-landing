@@ -34,31 +34,33 @@ function Header() {
   ];
 
   return (
-    <header className="sticky top-3 sm:top-4 z-50 px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto transition-all duration-300">
-      <div
-        className={`w-full rounded-2xl sm:rounded-full border border-border/60 bg-background/80 backdrop-blur-lg transition-all duration-300 ${
-          scrolled ? "shadow-lg shadow-black/5 border-border" : "shadow-sm"
-        }`}
-      >
-        <div className="flex items-center justify-between px-4 sm:px-6 py-2.5 sm:py-3">
+    <header
+      className={`sticky top-0 z-50 w-full rounded-b-[2rem] sm:rounded-b-[2.5rem] transition-all duration-300 ${
+        scrolled
+          ? "bg-background/85 backdrop-blur-xl border-b border-border/60 shadow-lg shadow-black/5"
+          : "bg-background/60 backdrop-blur-md border-b border-border/30"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between py-3 sm:py-4">
           {/* Logo */}
           <Link
             to="/"
-            className="flex items-center gap-2 font-bold text-lg sm:text-xl text-foreground tracking-tight hover:opacity-90 transition-opacity"
+            className="flex items-center gap-2.5 font-bold text-lg sm:text-xl text-foreground tracking-tight hover:opacity-90 transition-opacity"
           >
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground font-extrabold text-sm shadow-sm">
+            <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-primary text-primary-foreground font-extrabold text-sm shadow-md shadow-primary/20 transition-transform hover:scale-105">
               B
             </span>
-            <span className="hidden sm:inline">Bytsphere</span>
+            <span className="hidden sm:inline font-semibold">Bytsphere</span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-1 lg:gap-2">
+          <nav className="hidden md:flex items-center gap-1 bg-muted/50 p-1.5 rounded-full border border-border/40 backdrop-blur-sm">
             {navItems.map((item) => (
               <Link
                 key={item.label}
                 to={item.href}
-                className="px-3.5 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-muted/60 rounded-full"
+                className="px-4 py-1.5 text-sm font-medium text-muted-foreground transition-all duration-200 hover:text-foreground hover:bg-background rounded-full hover:shadow-sm"
               >
                 {item.label}
               </Link>
@@ -69,7 +71,7 @@ function Header() {
           <div className="hidden md:flex items-center gap-3">
             <Link
               to="/#contact"
-              className="inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-md active:scale-95"
+              className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2 text-sm font-medium text-primary-foreground shadow-md shadow-primary/20 transition-all hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/30 active:scale-95"
             >
               Get Started
             </Link>
@@ -84,7 +86,7 @@ function Header() {
               aria-expanded={isMenuOpen}
             >
               <svg
-                className="h-5 w-5"
+                className="h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -102,24 +104,24 @@ function Header() {
 
         {/* Mobile Navigation Dropdown */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-border/40 px-4 pt-3 pb-4 space-y-2 rounded-b-2xl bg-background/95 backdrop-blur-xl transition-all">
+          <div className="md:hidden border-t border-border/40 py-4 space-y-3 rounded-b-2xl bg-background/95 backdrop-blur-xl transition-all">
             <div className="flex flex-col space-y-1">
               {navItems.map((item) => (
                 <Link
                   key={item.label}
                   to={item.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl transition-colors"
+                  className="px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/60 rounded-2xl transition-colors"
                 >
                   {item.label}
                 </Link>
               ))}
             </div>
-            <div className="pt-2 border-t border-border/40">
+            <div className="pt-2 border-t border-border/40 px-2">
               <Link
                 to="/#contact"
                 onClick={() => setIsMenuOpen(false)}
-                className="w-full flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                className="w-full flex items-center justify-center rounded-full bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 shadow-sm"
               >
                 Get Started
               </Link>
