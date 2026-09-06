@@ -600,3 +600,461 @@ function Pricing() {
         "Dedicated technical account manager",
         "60 days post-launch SLA & optimization",
       ],
+      cta: "Select Global E-Commerce",
+    },
+  ];
+
+  const packages = activeTab === "webapp" ? webappPackages : ecommercePackages;
+
+  const addonOptions = [
+    "Brand identity & logo",
+    "Copywriting & content",
+    "SEO & analytics setup",
+    "Ongoing monthly retainer",
+  ];
+
+  const toggleAddon = (addon: string) => {
+    setQuoteForm((prev) => ({
+      ...prev,
+      addons: prev.addons.includes(addon)
+        ? prev.addons.filter((a) => a !== addon)
+        : [...prev.addons, addon],
+    }));
+  };
+
+  const handleDownloadQuote = () => {
+    const lines = [
+      "BYTSPHERE TECHNOLOGY — PROJECT QUOTE REQUEST",
+      "===========================================",
+      "",
+      `Company: ${quoteForm.companyName || "—"}`,
+      `Email: ${quoteForm.clientEmail || "—"}`,
+      `Package: ${quoteForm.packageType}`,
+      `Timeline: ${quoteForm.timeline}`,
+      `Budget range: ${quoteForm.budgetRange}`,
+      `Add-ons: ${quoteForm.addons.length ? quoteForm.addons.join(", ") : "None"}`,
+      "",
+      "Notes:",
+      quoteForm.notes || "—",
+      "",
+      "Bytsphere Technology · hello@bytsphere.dev",
+    ].join("\n");
+
+    const blob = new Blob([lines], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "bytsphere-quote-request.txt";
+    link.click();
+    URL.revokeObjectURL(url);
+    setDownloadSuccess(true);
+    window.setTimeout(() => setDownloadSuccess(false), 3000);
+  };
+
+  return (
+    <section id="pricing" className="border-t border-border bg-background">
+      <div className="mx-auto max-w-6xl px-6 py-20">
+        <div className="max-w-[48ch]">
+          <p className="font-body text-[12px] font-semibold uppercase tracking-[0.16em] text-primary">
+            Pricing
+          </p>
+          <h2 className="mt-1 font-display text-3xl font-medium leading-tight tracking-tight text-balance">
+            Fixed-scope packages, no surprises
+          </h2>
+          <p className="mt-3 font-body text-base leading-[1.6] text-muted-foreground text-pretty">
+            Every package includes design, build, QA, and a production deploy.
+          </p>
+        </div>
+
+        {/* Tabs */}
+        <div className="mt-8 inline-flex rounded-xl border border-border bg-muted/50 p-1">
+          <button
+            onClick={() => setActiveTab("webapp")}
+            className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-[13px] font-semibold transition-all ${
+              activeTab === "webapp"
+                ? "bg-background text-foreground shadow-sm ring-1 ring-border"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <Laptop className="size-3.5 text-primary" />
+            Web apps
+          </button>
+          <button
+            onClick={() => setActiveTab("ecommerce")}
+            className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-[13px] font-semibold transition-all ${
+              activeTab === "ecommerce"
+                ? "bg-background text-foreground shadow-sm ring-1 ring-border"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <ShoppingBag className="size-3.5 text-primary" />
+            E-commerce
+          </button>
+        </div>
+
+        <div className="mt-8 grid gap-6 lg:grid-cols-3">
+          {packages.map((pkg) => (
+            <div
+              key={pkg.name}
+              className={`relative flex flex-col rounded-3xl border bg-background p-6 transition-all hover:-translate-y-1 hover:shadow-lg ${
+                pkg.popular ? "border-primary shadow-md" : "border-border"
+              }`}
+            >
+              {pkg.popular && (
+                <span className="absolute -top-3 left-6 inline-flex items-center gap-1 rounded-full bg-primary px-2.5 py-1 text-[11px] font-semibold text-primary-foreground">
+                  <Zap className="size-3" />
+                  Most popular
+                </span>
+              )}
+              <h3 className="font-display text-[18px] font-semibold">{pkg.name}</h3>
+              <p className="mt-1.5 font-body text-[13px] leading-[1.6] text-muted-foreground">
+                {pkg.tagline}
+              </p>
+              <div className="mt-5 flex items-end gap-2">
+                <span className="font-display text-3xl font-semibold tracking-tight">
+                  {pkg.price}
+                </span>
+                <span className="pb-1 font-body text-[12px] text-muted-foreground">
+                  {pkg.timeframe}
+                </span>
+              </div>
+              <ul className="mt-5 flex-1 space-y-2.5">
+                {pkg.features.map((feature) => (
+                  <li key={feature} className="flex gap-2 font-body text-[13px] leading-[1.5] text-muted-foreground">
+                    <Check className="mt-0.5 size-3.5 shrink-0 text-primary" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <a
+                href="/contact"
+                className={`mt-6 inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 font-body text-[13px] font-semibold transition-all hover:-translate-y-0.5 ${
+                  pkg.popular
+                    ? "bg-primary text-primary-foreground ring-1 ring-primary hover:brightness-105"
+                    : "bg-background text-foreground ring-1 ring-border hover:bg-muted"
+                }`}
+              >
+                <span>{pkg.cta}</span>
+                <ArrowRight className="size-3.5" />
+              </a>
+            </div>
+          ))}
+        </div>
+
+        {/* Quote builder */}
+        <div className="mt-14 rounded-3xl border border-border bg-muted/40 p-6 md:p-8">
+          <div className="flex items-start gap-3">
+            <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-primary/10">
+              <Calculator className="size-4 text-primary" />
+            </span>
+            <div>
+              <h3 className="font-display text-xl font-semibold tracking-tight">
+                Build your quote
+              </h3>
+              <p className="mt-1 font-body text-[13px] leading-[1.6] text-muted-foreground">
+                Fill this in and download a summary you can share with your team.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            <label className="block">
+              <span className="font-body text-[12px] font-semibold text-foreground">Company name</span>
+              <input
+                type="text"
+                value={quoteForm.companyName}
+                onChange={(e) => setQuoteForm({ ...quoteForm, companyName: e.target.value })}
+                placeholder="Acme Inc."
+                className="mt-1.5 w-full rounded-xl border border-border bg-background px-3 py-2 font-body text-[13px] text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary"
+              />
+            </label>
+            <label className="block">
+              <span className="font-body text-[12px] font-semibold text-foreground">Work email</span>
+              <input
+                type="email"
+                value={quoteForm.clientEmail}
+                onChange={(e) => setQuoteForm({ ...quoteForm, clientEmail: e.target.value })}
+                placeholder="you@company.com"
+                className="mt-1.5 w-full rounded-xl border border-border bg-background px-3 py-2 font-body text-[13px] text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary"
+              />
+            </label>
+            <label className="block">
+              <span className="font-body text-[12px] font-semibold text-foreground">Package</span>
+              <select
+                value={quoteForm.packageType}
+                onChange={(e) => setQuoteForm({ ...quoteForm, packageType: e.target.value })}
+                className="mt-1.5 w-full rounded-xl border border-border bg-background px-3 py-2 font-body text-[13px] text-foreground outline-none focus:border-primary"
+              >
+                {[...webappPackages, ...ecommercePackages].map((pkg) => (
+                  <option key={pkg.name} value={pkg.name}>
+                    {pkg.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="block">
+              <span className="font-body text-[12px] font-semibold text-foreground">Timeline</span>
+              <select
+                value={quoteForm.timeline}
+                onChange={(e) => setQuoteForm({ ...quoteForm, timeline: e.target.value })}
+                className="mt-1.5 w-full rounded-xl border border-border bg-background px-3 py-2 font-body text-[13px] text-foreground outline-none focus:border-primary"
+              >
+                {["2-3 Weeks", "4-6 Weeks", "7+ Weeks", "Flexible"].map((t) => (
+                  <option key={t} value={t}>
+                    {t}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="block">
+              <span className="font-body text-[12px] font-semibold text-foreground">Budget range</span>
+              <select
+                value={quoteForm.budgetRange}
+                onChange={(e) => setQuoteForm({ ...quoteForm, budgetRange: e.target.value })}
+                className="mt-1.5 w-full rounded-xl border border-border bg-background px-3 py-2 font-body text-[13px] text-foreground outline-none focus:border-primary"
+              >
+                {["$4,000 - $8,000", "$8,000 - $12,000", "$12,000 - $20,000", "$20,000+"].map((b) => (
+                  <option key={b} value={b}>
+                    {b}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <div>
+              <span className="font-body text-[12px] font-semibold text-foreground">Add-ons</span>
+              <div className="mt-1.5 flex flex-wrap gap-2">
+                {addonOptions.map((addon) => {
+                  const selected = quoteForm.addons.includes(addon);
+                  return (
+                    <button
+                      key={addon}
+                      type="button"
+                      onClick={() => toggleAddon(addon)}
+                      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-body text-[12px] font-medium transition-colors ${
+                        selected
+                          ? "border-primary bg-primary/10 text-primary"
+                          : "border-border bg-background text-muted-foreground hover:text-foreground"
+                      }`}
+                    >
+                      {selected && <CheckCircle2 className="size-3" />}
+                      {addon}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          <label className="mt-4 block">
+            <span className="font-body text-[12px] font-semibold text-foreground">Project notes</span>
+            <textarea
+              value={quoteForm.notes}
+              onChange={(e) => setQuoteForm({ ...quoteForm, notes: e.target.value })}
+              rows={3}
+              placeholder="Tell us what you're building and any deadlines."
+              className="mt-1.5 w-full resize-none rounded-xl border border-border bg-background px-3 py-2 font-body text-[13px] text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary"
+            />
+          </label>
+
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              onClick={handleDownloadQuote}
+              className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 font-body text-[13px] font-semibold text-primary-foreground ring-1 ring-primary transition-all hover:-translate-y-0.5 hover:brightness-105"
+            >
+              <Download className="size-3.5" />
+              <span>Download quote summary</span>
+            </button>
+            <a
+              href="/contact"
+              className="inline-flex items-center gap-2 rounded-xl bg-background px-4 py-2.5 font-body text-[13px] font-medium text-foreground ring-1 ring-border transition-all hover:-translate-y-0.5 hover:bg-muted"
+            >
+              <FileText className="size-3.5 text-primary" />
+              <span>Send it to us instead</span>
+            </a>
+            {downloadSuccess && (
+              <span className="inline-flex items-center gap-1.5 font-body text-[13px] font-medium text-primary">
+                <CheckCircle2 className="size-4" />
+                Saved to your downloads
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Stats() {
+  const stats = [
+    { value: "120+", label: "Products shipped" },
+    { value: "0.9s", label: "Median load time" },
+    { value: "+41%", label: "Avg. conversion lift" },
+    { value: "98/100", label: "Avg. Lighthouse score" },
+  ];
+
+  return (
+    <section id="proof" className="border-t border-border bg-muted/40">
+      <div className="mx-auto max-w-6xl px-6 py-16">
+        <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+          <div className="max-w-[36ch]">
+            <p className="font-body text-[12px] font-semibold uppercase tracking-[0.16em] text-primary">
+              Proof
+            </p>
+            <h2 className="mt-1 font-display text-3xl font-medium leading-tight tracking-tight text-balance">
+              Numbers our clients can bank on
+            </h2>
+          </div>
+          <div className="grid flex-1 grid-cols-2 gap-6 lg:grid-cols-4">
+            {stats.map((stat) => (
+              <div key={stat.label}>
+                <p className="font-display text-3xl font-semibold tracking-tight text-foreground">
+                  {stat.value}
+                </p>
+                <p className="mt-1 font-body text-[13px] text-muted-foreground">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-border pt-6 font-body text-[13px] text-muted-foreground">
+          <span className="inline-flex items-center gap-1.5">
+            <ShieldCheck className="size-4 text-primary" />
+            Accessibility-first builds
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <Zap className="size-4 text-primary" />
+            Weekly staging previews
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <CheckCircle2 className="size-4 text-primary" />
+            Fixed-scope contracts
+          </span>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Testimonials() {
+  const testimonials = [
+    {
+      quote:
+        "Bytsphere rebuilt our storefront in five weeks and mobile conversions climbed 38%. The handover was clean, documented, and genuinely fast.",
+      name: "Maya Adeyemi",
+      role: "Head of Digital, Fieldnote",
+      image: testimonial1Asset.url,
+    },
+    {
+      quote:
+        "Our dashboard finally feels calm. They pushed back where it mattered and shipped exactly what our customers asked for.",
+      name: "Daniel Okoro",
+      role: "Co-founder, Lumenloop",
+      image: testimonial2Asset.url,
+    },
+  ];
+
+  return (
+    <section id="testimonials" className="border-t border-border bg-background">
+      <div className="mx-auto max-w-6xl px-6 py-20">
+        <div className="max-w-[48ch]">
+          <p className="font-body text-[12px] font-semibold uppercase tracking-[0.16em] text-primary">
+            Testimonials
+          </p>
+          <h2 className="mt-1 font-display text-3xl font-medium leading-tight tracking-tight text-balance">
+            What partners say after launch
+          </h2>
+        </div>
+        <div className="mt-10 grid gap-6 md:grid-cols-2">
+          {testimonials.map((item) => (
+            <figure
+              key={item.name}
+              className="flex flex-col justify-between rounded-3xl border border-border bg-background p-6 transition-all hover:border-primary/40 hover:shadow-sm"
+            >
+              <blockquote className="font-body text-[15px] leading-[1.65] text-foreground text-pretty">
+                “{item.quote}”
+              </blockquote>
+              <figcaption className="mt-6 flex items-center gap-3 border-t border-border/60 pt-5">
+                <img
+                  src={item.image}
+                  alt={`Portrait of ${item.name}`}
+                  className="size-11 rounded-full bg-muted object-cover ring-1 ring-border"
+                  width={88}
+                  height={88}
+                  loading="lazy"
+                />
+                <div className="leading-tight">
+                  <p className="font-display text-[14px] font-semibold">{item.name}</p>
+                  <p className="font-body text-[12px] text-muted-foreground">{item.role}</p>
+                </div>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FinalCTA() {
+  return (
+    <section id="contact" className="border-t border-border bg-muted/40">
+      <div className="mx-auto max-w-6xl px-6 py-20">
+        <div className="rounded-3xl border border-border bg-background p-8 md:p-12">
+          <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+            <div className="max-w-[42ch]">
+              <h2 className="font-display text-3xl font-medium leading-tight tracking-tight text-balance">
+                Ready to build something people want to use?
+              </h2>
+              <p className="mt-3 font-body text-base leading-[1.6] text-muted-foreground text-pretty">
+                Book a 30-minute discovery call. You will leave with a scope, a timeline, and a price.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <a
+                href="/contact"
+                className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 font-body text-[14px] font-semibold text-primary-foreground ring-1 ring-primary transition-all hover:-translate-y-0.5 hover:brightness-105"
+              >
+                <span>Book a discovery call</span>
+                <ArrowRight className="size-4" />
+              </a>
+              <a
+                href="mailto:hello@bytsphere.dev"
+                className="inline-flex items-center gap-2 rounded-xl bg-background px-5 py-3 font-body text-[14px] font-medium text-foreground ring-1 ring-border transition-all hover:-translate-y-0.5 hover:bg-muted"
+              >
+                <span>hello@bytsphere.dev</span>
+                <ExternalLink className="size-4 text-muted-foreground" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="border-t border-border bg-background">
+      <div className="mx-auto max-w-6xl px-6 py-10">
+        <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center gap-2.5">
+            <span className="size-2.5 rounded-full bg-primary" />
+            <span className="font-display text-[15px] font-semibold tracking-tight">
+              Bytsphere <span className="font-normal text-muted-foreground">Technology</span>
+            </span>
+          </div>
+          <nav className="flex flex-wrap gap-x-6 gap-y-2 font-body text-[13px] text-muted-foreground">
+            <a href="/#services" className="transition-colors hover:text-foreground">Services</a>
+            <a href="/#portfolio" className="transition-colors hover:text-foreground">Portfolio</a>
+            <a href="/#process" className="transition-colors hover:text-foreground">Process</a>
+            <a href="/#pricing" className="transition-colors hover:text-foreground">Pricing</a>
+            <a href="/contact" className="transition-colors hover:text-foreground">Contact</a>
+          </nav>
+        </div>
+        <p className="mt-8 border-t border-border pt-6 font-body text-[12px] text-muted-foreground">
+          © {new Date().getFullYear()} Bytsphere Technology. All rights reserved.
+        </p>
+      </div>
+    </footer>
+  );
+}
