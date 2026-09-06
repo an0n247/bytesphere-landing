@@ -15,6 +15,10 @@ import {
   BarChart3, 
   CheckCircle2,
   ExternalLink,
+  Download,
+  FileText,
+  Check,
+  Calculator,
 } from "lucide-react";
 
 import heroAsset from "@/assets/bytsphere-hero.jpg.asset.json";
@@ -59,6 +63,7 @@ function LandingPage() {
         <Services />
         <Portfolio />
         <Process />
+        <Pricing />
         <Stats />
         <Testimonials />
         <FinalCTA />
@@ -76,6 +81,7 @@ function Header() {
     { name: "Services", href: "/#services" },
     { name: "Portfolio", href: "/#portfolio" },
     { name: "Process", href: "/#process" },
+    { name: "Pricing", href: "/#pricing" },
     { name: "Proof", href: "/#proof" },
     { name: "Testimonials", href: "/#testimonials" },
     { name: "Contact", href: "/contact" },
@@ -476,171 +482,122 @@ function Process() {
   );
 }
 
-function Stats() {
-  return (
-    <section id="proof" className="border-t border-border bg-muted">
-      <div className="mx-auto max-w-6xl px-6 py-14">
-        <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
-          <div className="rise-d1">
-            <p className="font-display text-3xl font-semibold tracking-tight">120+</p>
-            <p className="mt-1 font-body text-[13px] text-muted-foreground">Products shipped</p>
-          </div>
-          <div className="rise-d2">
-            <p className="font-display text-3xl font-semibold tracking-tight">
-              +34<span className="text-primary">%</span>
-            </p>
-            <p className="mt-1 font-body text-[13px] text-muted-foreground">Avg. conversion lift</p>
-          </div>
-          <div className="rise-d3">
-            <p className="font-display text-3xl font-semibold tracking-tight">0.9s</p>
-            <p className="mt-1 font-body text-[13px] text-muted-foreground">Median load time</p>
-          </div>
-          <div className="rise-d4">
-            <p className="font-display text-3xl font-semibold tracking-tight">9 yrs</p>
-            <p className="mt-1 font-body text-[13px] text-muted-foreground">Agency track record</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
+function Pricing() {
+  const [activeTab, setActiveTab] = useState<"webapp" | "ecommerce">("webapp");
+  const [downloadSuccess, setDownloadSuccess] = useState(false);
 
-function Testimonials() {
-  return (
-    <section id="testimonials" className="border-t border-border bg-background">
-      <div className="mx-auto max-w-6xl px-6 py-20">
-        <div className="mb-10 max-w-[48ch]">
-          <p className="font-body text-[12px] font-semibold uppercase tracking-[0.16em] text-primary">
-            Client Feedback
-          </p>
-          <h2 className="mt-1 font-display text-3xl font-medium leading-tight tracking-tight text-balance">
-            Trusted by founders and product leaders
-          </h2>
-        </div>
-        <div className="grid gap-6 md:grid-cols-2">
-          <figure className="rise-d1 rounded-2xl bg-background p-7 ring-1 ring-border transition-all hover:ring-primary/40 hover:shadow-sm">
-            <p className="font-body text-[15px] leading-[1.6] text-pretty">
-              "Bytsphere rebuilt our storefront in six weeks. Checkouts fell from four minutes to one, and revenue followed within a month."
-            </p>
-            <figcaption className="mt-5 flex items-center gap-3">
-              <img
-                src={testimonial1Asset.url}
-                alt="Mara Voss, Head of Commerce at Fieldnote"
-                className="size-11 shrink-0 rounded-full bg-muted object-cover ring-2 ring-primary/20"
-                width={512}
-                height={512}
-                loading="lazy"
-              />
-              <div className="leading-tight">
-                <p className="font-display text-[14px] font-semibold">Mara Voss</p>
-                <p className="font-body text-[12px] text-muted-foreground">Head of Commerce, Fieldnote</p>
-              </div>
-            </figcaption>
-          </figure>
-          <figure className="rise-d2 rounded-2xl bg-background p-7 ring-1 ring-border transition-all hover:ring-primary/40 hover:shadow-sm">
-            <p className="font-body text-[15px] leading-[1.6] text-pretty">
-              "The rare studio that treats performance and design as one discipline. Our dashboard finally feels as fast as it looks."
-            </p>
-            <figcaption className="mt-5 flex items-center gap-3">
-              <img
-                src={testimonial2Asset.url}
-                alt="Devon Rae, CTO at Lumenloop"
-                className="size-11 shrink-0 rounded-full bg-muted object-cover ring-2 ring-primary/20"
-                width={512}
-                height={512}
-                loading="lazy"
-              />
-              <div className="leading-tight">
-                <p className="font-display text-[14px] font-semibold">Devon Rae</p>
-                <p className="font-body text-[12px] text-muted-foreground">CTO, Lumenloop</p>
-              </div>
-            </figcaption>
-          </figure>
-        </div>
-      </div>
-    </section>
-  );
-}
+  const [quoteForm, setQuoteForm] = useState({
+    companyName: "",
+    clientEmail: "",
+    packageType: "Web App Growth Sprint",
+    timeline: "4-6 Weeks",
+    budgetRange: "$8,000 - $12,000",
+    addons: [] as string[],
+    notes: "",
+  });
 
-function FinalCTA() {
-  return (
-    <section id="contact" className="border-t border-border bg-muted">
-      <div className="mx-auto max-w-6xl px-6 py-20">
-        <div className="rise rounded-3xl bg-primary px-8 py-12 shadow-xl md:px-12">
-          <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-center">
-            <div className="max-w-xl">
-              <div className="inline-flex items-center gap-2 rounded-full bg-primary-foreground/15 px-3 py-1 text-xs font-semibold text-primary-foreground mb-4">
-                <Sparkles className="size-3.5" />
-                <span>Now accepting projects for Q3 &amp; Q4</span>
-              </div>
-              <h2 className="font-display text-3xl font-semibold leading-tight tracking-tight text-balance text-primary-foreground sm:text-4xl">
-                Ready to ship something that performs?
-              </h2>
-              <p className="mt-4 font-body text-base leading-[1.6] text-pretty text-primary-foreground/85">
-                Tell us where your product is today. We&apos;ll map the path to a faster, cleaner, higher-converting build.
-              </p>
-            </div>
-            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col shrink-0">
-              <a
-                href="/contact"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-background px-6 py-3 font-body text-[14px] font-semibold text-primary shadow-sm ring-1 ring-background transition-all hover:-translate-y-0.5 hover:shadow-md hover:bg-background/95"
-              >
-                <span>Start a project</span>
-                <ArrowRight className="size-4" />
-              </a>
-              <a
-                href="#portfolio"
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-primary-foreground/30 bg-primary/20 px-6 py-3 font-body text-[14px] font-medium text-primary-foreground transition-all hover:-translate-y-0.5 hover:bg-primary-foreground/10"
-              >
-                <span>View our work</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
+  const webappPackages = [
+    {
+      name: "MVP Sprint",
+      tagline: "For early stage startups validating a new SaaS or web application.",
+      price: "$4,500",
+      timeframe: "2 - 3 weeks",
+      popular: false,
+      features: [
+        "Up to 5 core application screens",
+        "Interactive prototype & wireframes",
+        "React/TypeScript frontend setup",
+        "Authentication & Database API hooks",
+        "Mobile responsive architecture",
+        "Lighthouse performance 90+ score",
+        "14 days post-launch SLA support",
+      ],
+      cta: "Select MVP Package",
+    },
+    {
+      name: "Growth Application",
+      tagline: "For scaling businesses building rich, production-grade web tools.",
+      price: "$9,800",
+      timeframe: "4 - 6 weeks",
+      popular: true,
+      features: [
+        "Up to 15 complex UI views & dashboards",
+        "Complete design system & component library",
+        "Advanced data tables & visualization charts",
+        "Role-based access & multi-tenant workflows",
+        "Third-party API & webhook integrations",
+        "Comprehensive QA & Automated E2E testing",
+        "30 days post-launch warranty & maintenance",
+      ],
+      cta: "Select Growth Package",
+    },
+    {
+      name: "Custom Enterprise",
+      tagline: "For high-scale platforms requiring dedicated engineering & SLA.",
+      price: "From $18,500",
+      timeframe: "8+ weeks",
+      popular: false,
+      features: [
+        "Unlimited custom views & workflow modules",
+        "Micro-frontend or monorepo architecture",
+        "High-concurrency realtime infrastructure",
+        "Custom analytics & telemetry integrations",
+        "SOC2 & GDPR compliance support",
+        "Dedicated project lead & Slack channel",
+        "60 days dedicated post-launch SLA",
+      ],
+      cta: "Talk to Enterprise Lead",
+    },
+  ];
 
-function Footer() {
-  return (
-    <footer className="border-t border-border bg-background">
-      <div className="mx-auto max-w-6xl px-6 py-12">
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-center">
-          <a href="/" className="flex items-center gap-2">
-            <span className="size-2.5 rounded-full bg-primary" />
-            <span className="font-display text-[15px] font-semibold">Bytsphere Technology</span>
-          </a>
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 font-body text-[13px] text-muted-foreground">
-            <a href="mailto:hello@bytsphere.dev" className="transition-colors hover:text-foreground">
-              hello@bytsphere.dev
-            </a>
-            <a href="/#services" className="transition-colors hover:text-foreground">
-              Services
-            </a>
-            <a href="/#portfolio" className="transition-colors hover:text-foreground">
-              Portfolio
-            </a>
-            <a href="/#process" className="transition-colors hover:text-foreground">
-              Process
-            </a>
-            <a href="/contact" className="transition-colors hover:text-foreground">
-              Contact
-            </a>
-          </div>
-        </div>
-        <div className="mt-8 flex flex-col justify-between gap-4 border-t border-border/50 pt-6 sm:flex-row sm:items-center">
-          <p className="font-body text-[12px] text-muted-foreground/80">
-            © {new Date().getFullYear()} Bytsphere Technology. Designed in daylight, shipped in production.
-          </p>
-          <div className="flex items-center gap-4 text-[12px] text-muted-foreground">
-            <a href="#" className="hover:text-foreground">Twitter / X</a>
-            <a href="#" className="hover:text-foreground">LinkedIn</a>
-            <a href="#" className="hover:text-foreground">GitHub</a>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
+  const ecommercePackages = [
+    {
+      name: "Essentials Store",
+      tagline: "For boutique brands launching a fast, high-converting store.",
+      price: "$3,800",
+      timeframe: "2 - 3 weeks",
+      popular: false,
+      features: [
+        "Custom Shopify / Commerce template theme",
+        "Up to 10 product pages & collection layouts",
+        "Mobile-optimized checkout UX",
+        "Payment gateways & tax configuration",
+        "Core marketing pixel & SEO setup",
+        "Product data migration assistance",
+        "14 days post-launch support",
+      ],
+      cta: "Select Storefront Essentials",
+    },
+    {
+      name: "Headless Commerce",
+      tagline: "For growth DTC brands requiring sub-second loads and custom UX.",
+      price: "$8,500",
+      timeframe: "4 - 5 weeks",
+      popular: true,
+      features: [
+        "Next.js / Remix Headless frontend",
+        "Shopify Plus / Commerce Layer API integration",
+        "Instant cart drawers & multi-currency support",
+        "Headless CMS for rich brand landing pages",
+        "0.8s median page load speeds",
+        "Advanced analytics & conversion tracking",
+        "30 days post-launch scaling support",
+      ],
+      cta: "Select Headless Commerce",
+    },
+    {
+      name: "Global E-Commerce",
+      tagline: "For international retailers with complex catalog & ERP requirements.",
+      price: "From $16,000",
+      timeframe: "7+ weeks",
+      popular: false,
+      features: [
+        "Multi-region, localized checkout & VAT engines",
+        "Custom 3D / AR product visualizer integration",
+        "Real-time ERP, PIM, and warehouse sync",
+        "Omnichannel loyalty & subscription engines",
+        "Custom checkout extension apps",
+        "Dedicated technical account manager",
+        "60 days post-launch SLA & optimization",
+      ],
+      cta: "
