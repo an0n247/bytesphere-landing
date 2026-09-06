@@ -600,4 +600,3 @@ function Pricing() {
         "Dedicated technical account manager",
         "60 days post-launch SLA & optimization",
       ],
-      cta: "
